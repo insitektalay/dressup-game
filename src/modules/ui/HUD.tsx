@@ -25,6 +25,8 @@ export default function HUD() {
 
   if (wardrobeOpen) return null
 
+  const isInGame = roundPhase !== 'LOBBY'
+
   return (
     <>
       {/* Top bar */}
@@ -43,40 +45,64 @@ export default function HUD() {
         </div>
       </div>
 
-      {/* Bottom right buttons */}
+      {/* Bottom buttons */}
       <div className="fixed bottom-8 right-4 z-40 flex flex-col gap-3">
-        {/* Wardrobe button - always available but highlighted near station */}
-        <button
-          onClick={() => setWardrobeOpen(true)}
-          className={`px-4 py-3 rounded-2xl font-bold text-sm shadow-lg transition-all ${
-            nearWardrobeStation
-              ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white scale-110 animate-pulse border-2 border-white/50'
-              : 'bg-white/80 backdrop-blur-sm text-pink-600 hover:bg-white border border-pink-200'
-          }`}
-        >
-          {nearWardrobeStation ? '✨ Open Wardrobe!' : '👗 Wardrobe'}
-        </button>
-
-        {/* Start Round button */}
-        {roundPhase === 'LOBBY' && (
+        {/* Wardrobe button */}
+        {(roundPhase === 'LOBBY' || roundPhase === 'DRESSING') && (
           <button
-            onClick={() => triggerRound()}
-            className="px-4 py-3 rounded-2xl font-bold text-sm bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:scale-105 transition-transform border border-white/30"
+            onClick={() => setWardrobeOpen(true)}
+            className={`px-4 py-3 rounded-2xl font-bold text-sm shadow-lg transition-all ${
+              nearWardrobeStation
+                ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white scale-110 animate-pulse border-2 border-white/50'
+                : 'bg-white/80 backdrop-blur-sm text-pink-600 hover:bg-white border border-pink-200'
+            }`}
           >
-            🎤 Start Round!
+            {nearWardrobeStation ? '✨ Open Wardrobe!' : '👗 Wardrobe'}
           </button>
         )}
       </div>
 
-      {/* Mobile hint */}
-      <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-30 sm:hidden">
-        <p className="text-[10px] text-white/40 font-bold">Use joystick to move</p>
-      </div>
+      {/* Big Start Fashion Show button - center bottom */}
+      {roundPhase === 'LOBBY' && (
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
+          <button
+            onClick={() => triggerRound()}
+            className="relative px-8 py-4 rounded-full font-bold text-lg bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 text-white shadow-2xl hover:scale-110 active:scale-95 transition-all border-2 border-white/40 animate-sparkle-border group"
+          >
+            <span className="relative z-10">✨ Start Fashion Show! ✨</span>
+            {/* Glow effect */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 blur-lg opacity-50 group-hover:opacity-80 transition-opacity" />
+          </button>
+        </div>
+      )}
 
-      {/* Desktop hint */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 hidden sm:block">
-        <p className="text-xs text-white/30 font-bold">WASD / Arrow keys to move | Right-click drag to orbit camera</p>
-      </div>
+      {/* Skip voting button during VOTING */}
+      {roundPhase === 'VOTING' && (
+        <div className="fixed bottom-4 right-4 z-40">
+          <button
+            onClick={() => {
+              // Force advance to results by setting votingIndex past end
+              const { contestants } = useGameStore.getState()
+              useGameStore.getState().setVotingIndex(contestants.length)
+            }}
+            className="px-3 py-1.5 rounded-full text-xs font-bold text-white/50 hover:text-white/80 transition-colors"
+          >
+            Skip →
+          </button>
+        </div>
+      )}
+
+      {/* Mobile hint */}
+      {roundPhase === 'LOBBY' && (
+        <>
+          <div className="fixed bottom-2 left-1/2 -translate-x-1/2 z-30 sm:hidden">
+            <p className="text-[10px] text-white/40 font-bold">Use joystick to move</p>
+          </div>
+          <div className="fixed bottom-4 left-4 z-30 hidden sm:block">
+            <p className="text-xs text-white/30 font-bold">WASD to move | Right-click drag to orbit</p>
+          </div>
+        </>
+      )}
 
       <ToastContainer />
     </>

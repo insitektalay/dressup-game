@@ -1,4 +1,4 @@
-export type ClothingCategory = 'hair' | 'top' | 'bottom' | 'shoes' | 'accessory'
+export type ClothingCategory = 'hair' | 'top' | 'bottom' | 'shoes' | 'accessory' | 'makeup'
 export type Rarity = 'common' | 'rare' | 'legendary'
 
 export interface ClothingItemData {
@@ -30,4 +30,5 @@ export const CATEGORY_EMOJI: Record<ClothingCategory, string> = {
   bottom: '👗',
   shoes: '👠',
   accessory: '✨',
+  makeup: '💄',
 }

@@ -7,7 +7,7 @@ import type { ClothingCategory } from '@/modules/clothing/types'
 
 export function calculateScore(avatar: AvatarState, theme: ThemeData): number {
   let score = 0
-  const categories: ClothingCategory[] = ['hair', 'top', 'bottom', 'shoes', 'accessory']
+  const categories: ClothingCategory[] = ['hair', 'top', 'bottom', 'shoes', 'accessory', 'makeup']
 
   for (const cat of categories) {
     const itemId = avatar[cat]
@@ -37,6 +37,16 @@ export function calculateScore(avatar: AvatarState, theme: ThemeData): number {
 }
 
 export function generateNPCScore(): number {
-  // NPC scores are semi-random, ranging from 20-80
-  return Math.round(30 + Math.random() * 50)
+  // NPC scores are semi-random, ranging from 25-85
+  return Math.round(25 + Math.random() * 60)
+}
+
+export function generateNPCStars(): number {
+  // NPC "votes" on player: weighted toward 3-5 stars
+  const r = Math.random()
+  if (r < 0.05) return 1
+  if (r < 0.15) return 2
+  if (r < 0.35) return 3
+  if (r < 0.65) return 4
+  return 5
 }

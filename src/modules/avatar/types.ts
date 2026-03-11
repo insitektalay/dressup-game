@@ -6,6 +6,7 @@ export interface AvatarState {
   bottom: string | null
   shoes: string | null
   accessory: string | null
+  makeup: string | null
 }
 
 export const DEFAULT_AVATAR: AvatarState = {
@@ -16,6 +17,7 @@ export const DEFAULT_AVATAR: AvatarState = {
   bottom: null,
   shoes: null,
   accessory: null,
+  makeup: null,
 }
 
 export interface AttachmentPoint {
@@ -30,4 +32,5 @@ export const ATTACHMENT_POINTS: Record<string, AttachmentPoint> = {
   bottom: { position: [0, 0.35, 0] },
   shoes: { position: [0, -0.05, 0] },
   accessory: { position: [0, 1.9, 0] },
+  makeup: { position: [0, 1.2, 0] },
 }

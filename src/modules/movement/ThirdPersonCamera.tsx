@@ -3,6 +3,7 @@
 import { useRef, useEffect } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useGameStore } from '@/stores/gameStore'
 
 interface ThirdPersonCameraProps {
   target: React.RefObject<THREE.Group | null>
@@ -18,11 +19,13 @@ export default function ThirdPersonCamera({ target }: ThirdPersonCameraProps) {
   const cameraDistance = 6
   const cameraHeight = 3
 
+  const roundPhase = useGameStore((s) => s.roundPhase)
+  const runwayWalkerIndex = useGameStore((s) => s.runwayWalkerIndex)
+
   useEffect(() => {
     const canvas = gl.domElement
 
     const onPointerDown = (e: PointerEvent) => {
-      // Only orbit on right-click or two-finger on mobile
       if (e.button === 2 || e.pointerType === 'touch') {
         isDragging.current = true
         lastMouse.current = { x: e.clientX, y: e.clientY }
@@ -60,9 +63,38 @@ export default function ThirdPersonCamera({ target }: ThirdPersonCameraProps) {
   useFrame(() => {
     if (!target.current) return
 
+    const isRunway = roundPhase === 'RUNWAY' && runwayWalkerIndex >= 0
+
+    if (isRunway) {
+      // Runway camera: follow the walker from the side, dramatic angle
+      const targetPos = new THREE.Vector3()
+      target.current.getWorldPosition(targetPos)
+
+      // For player (walker 0), use the player group position
+      // Camera positioned to the side of the runway, angled to look dramatic
+      const playerPos = useGameStore.getState().playerPosition
+
+      // Side camera view of runway
+      const walkerZ = playerPos[2]
+      const cameraTarget = new THREE.Vector3(0, 1.5, walkerZ)
+
+      // Camera offset: to the side and slightly above
+      const runwayCamPos = new THREE.Vector3(
+        4, // Side of runway
+        2.5, // Elevated
+        walkerZ + 2, // Slightly behind
+      )
+
+      camera.position.lerp(runwayCamPos, 0.04)
+      const lookTarget = new THREE.Vector3(0, 1.2, walkerZ - 1)
+      camera.lookAt(lookTarget)
+      return
+    }
+
+    // Normal third-person camera
     const targetPos = new THREE.Vector3()
     target.current.getWorldPosition(targetPos)
-    targetPos.y += 1.5 // Look at avatar head area
+    targetPos.y += 1.5
 
     const cameraX = targetPos.x + Math.sin(orbitAngle.current) * cameraDistance * Math.cos(orbitPitch.current)
     const cameraY = targetPos.y + cameraHeight * Math.sin(orbitPitch.current)

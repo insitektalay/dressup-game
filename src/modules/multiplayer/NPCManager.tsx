@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useMemo, useEffect } from 'react'
 import NPCAvatar from './NPCAvatar'
 import { NPC_NAMES } from './types'
 import { clothingCatalog } from '@/modules/clothing/ClothingCatalog'
@@ -14,6 +14,7 @@ function generateRandomAvatar(): AvatarState {
   const bottomItems = clothingCatalog.filter((i) => i.category === 'bottom')
   const shoeItems = clothingCatalog.filter((i) => i.category === 'shoes')
   const accItems = clothingCatalog.filter((i) => i.category === 'accessory')
+  const makeupItems = clothingCatalog.filter((i) => i.category === 'makeup')
 
   return {
     skinColor: randomFromArray(SKIN_COLORS),
@@ -22,7 +23,8 @@ function generateRandomAvatar(): AvatarState {
     top: randomFromArray(topItems).id,
     bottom: randomFromArray(bottomItems).id,
     shoes: randomFromArray(shoeItems).id,
-    accessory: Math.random() > 0.5 ? randomFromArray(accItems).id : null,
+    accessory: Math.random() > 0.4 ? randomFromArray(accItems).id : null,
+    makeup: Math.random() > 0.5 ? randomFromArray(makeupItems).id : null,
   }
 }
 
@@ -36,8 +38,18 @@ export default function NPCManager() {
         0,
         randomBetween(-15, 15),
       ] as [number, number, number],
+      index: i,
     })),
   [])
+
+  // Store NPC avatars globally so RoundManager can access them
+  useEffect(() => {
+    const avatarMap: Record<string, AvatarState> = {}
+    npcs.forEach((npc) => {
+      avatarMap[npc.name] = npc.avatar
+    })
+    ;(window as unknown as Record<string, unknown>).__npcAvatars = avatarMap
+  }, [npcs])
 
   return (
     <group>
@@ -47,6 +59,7 @@ export default function NPCManager() {
           name={npc.name}
           avatarState={npc.avatar}
           startPosition={npc.position}
+          npcIndex={npc.index}
         />
       ))}
     </group>

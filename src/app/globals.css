@@ -58,6 +58,8 @@ html, body {
   border-radius: 4px;
 }
 
+/* === ANIMATIONS === */
+
 @keyframes sparkle {
   0%, 100% { opacity: 0; transform: scale(0); }
   50% { opacity: 1; transform: scale(1); }
@@ -78,6 +80,38 @@ html, body {
   to { opacity: 1; }
 }
 
+@keyframes themeReveal {
+  0% { opacity: 0; transform: translate(-50%, 0) scale(0.3); }
+  50% { opacity: 1; transform: translate(-50%, 0) scale(1.1); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+@keyframes bounceSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes pulseFast {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes confetti {
+  0% { top: -10%; opacity: 1; transform: rotate(0deg) scale(1); }
+  100% { top: 110%; opacity: 0; transform: rotate(720deg) scale(0.5); }
+}
+
+@keyframes resultsPop {
+  0% { opacity: 0; transform: scale(0.5); }
+  60% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes sparkleBorder {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 105, 180, 0.5), 0 0 30px rgba(255, 105, 180, 0.2); }
+  50% { box-shadow: 0 0 25px rgba(255, 105, 180, 0.8), 0 0 50px rgba(255, 105, 180, 0.4), 0 0 80px rgba(147, 51, 234, 0.2); }
+}
+
 .animate-sparkle {
   animation: sparkle 2s ease-in-out infinite;
 }
@@ -92,4 +126,28 @@ html, body {
 
 .animate-fade-in {
   animation: fadeIn 0.3s ease-out;
+}
+
+.animate-theme-reveal {
+  animation: themeReveal 0.6s ease-out;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 2s ease-in-out infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulseFast 0.5s ease-in-out infinite;
+}
+
+.animate-confetti {
+  animation: confetti 3s ease-in-out infinite;
+}
+
+.animate-results-pop {
+  animation: resultsPop 0.5s ease-out;
+}
+
+.animate-sparkle-border {
+  animation: sparkleBorder 2s ease-in-out infinite;
 }

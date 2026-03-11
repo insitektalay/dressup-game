@@ -27,6 +27,9 @@ export const WORLD = {
   wardrobeStation: [-10, 0, -5] as [number, number, number],
   runwayPosition: [0, 0, -10] as [number, number, number],
   socialArea: [10, 0, 5] as [number, number, number],
+  runwayStart: [0, 0, -4] as [number, number, number],
+  runwayEnd: [0, 0, -15] as [number, number, number],
+  runwayPoseSpot: [0, 0, -14.5] as [number, number, number],
 } as const
 
 // Avatar dimensions (chibi proportions)
@@ -63,8 +66,9 @@ export const ECONOMY = {
 // Round timing
 export const ROUND = {
   dressingTime: 60,
-  runwayTime: 20,
-  scoringTime: 5,
-  resultsTime: 8,
+  runwayWalkTime: 6, // seconds per walker
+  votingTimePerContestant: 5,
+  scoringTime: 3,
+  resultsTime: 12,
   announceTime: 5,
 } as const

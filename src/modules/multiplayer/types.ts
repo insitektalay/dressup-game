@@ -16,6 +16,9 @@ export const NPC_NAMES = [
   'Bella',
   'Rosie',
   'Daisy',
+  'Crystal',
+  'Melody',
+  'Violet',
 ] as const
 
 export const NPC_CHAT_MESSAGES = [
@@ -29,4 +32,10 @@ export const NPC_CHAT_MESSAGES = [
   'Your hair is goals! 💇‍♀️',
   'Runway time! 💃',
   'Best outfit ever! 🌟',
+  'Slay queen! 💅',
+  'OMG those shoes! 👠',
+  'You look amazing!! 😍',
+  'Iconic fit bestie! 🔥',
+  'Main character energy! ✨',
+  'Serving LOOKS! 💜',
 ]

@@ -27,7 +27,6 @@ export default function WardrobePanel() {
   const handleEquip = (itemId: string) => {
     const currentlyEquipped = avatar[activeCategory]
     if (currentlyEquipped === itemId) {
-      // Unequip
       equipItem(activeCategory, null)
     } else {
       equipItem(activeCategory, itemId)
@@ -53,11 +52,16 @@ export default function WardrobePanel() {
       />
 
       {/* Panel */}
-      <div className="relative w-full sm:max-w-md sm:mx-4 bg-gradient-to-b from-purple-900/95 to-pink-900/95 backdrop-blur-md rounded-t-3xl sm:rounded-3xl animate-slide-up max-h-[85vh] flex flex-col border-t-2 sm:border-2 border-pink-400/30">
+      <div className="relative w-full sm:max-w-md sm:mx-4 bg-gradient-to-b from-purple-900/95 to-pink-900/95 backdrop-blur-md rounded-t-3xl sm:rounded-3xl animate-slide-up max-h-[85vh] flex flex-col border-t-2 sm:border-2 border-pink-400/40 shadow-2xl">
         {/* Header */}
         <div className="flex items-center justify-between px-4 pt-4 pb-2">
           <div>
-            <h2 className="text-xl font-bold text-white">Wardrobe ✨</h2>
+            <h2 className="text-xl font-bold text-white">
+              <span className="bg-gradient-to-r from-pink-300 to-purple-300 bg-clip-text text-transparent">
+                Wardrobe
+              </span>
+              {' '}✨
+            </h2>
             <div className="flex items-center gap-1 mt-0.5">
               <span className="text-sm">🪙</span>
               <span className="text-sm font-bold text-yellow-300">{coins}</span>
@@ -66,9 +70,9 @@ export default function WardrobePanel() {
           <div className="flex gap-2">
             <button
               onClick={() => setShowAvatarBuilder(!showAvatarBuilder)}
-              className="bg-purple-500/50 text-white px-3 py-1 rounded-full text-xs font-bold hover:bg-purple-500/70 transition-colors"
+              className="bg-purple-500/50 text-white px-3 py-1 rounded-full text-xs font-bold hover:bg-purple-500/70 transition-colors border border-purple-400/30"
             >
-              {showAvatarBuilder ? 'Items' : 'Avatar'}
+              {showAvatarBuilder ? '👗 Items' : '🎨 Avatar'}
             </button>
             <button
               onClick={() => setWardrobeOpen(false)}

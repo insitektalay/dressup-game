@@ -106,7 +106,7 @@ function Face({ style, skinColor }: { style: number; skinColor: string }) {
         <sphereGeometry args={[0.02, 8, 8]} />
         <meshBasicMaterial color={skinColor} />
       </mesh>
-      {/* Whiskers (simplified) */}
+      {/* Whiskers */}
       <mesh position={[-0.25, -0.05, 0.38]} rotation={[0, 0, 0.1]}>
         <boxGeometry args={[0.15, 0.008, 0.008]} />
         <meshBasicMaterial color="#1A1A2E" />
@@ -171,17 +171,19 @@ export default function Avatar({ avatarState, isWalking = false, position, rotat
               <ClothingItem itemId={avatarState.hair} position={[0, 1.2, 0]} />
             </group>
           )}
+
+          {/* Makeup (face overlay) */}
+          {avatarState.makeup && (
+            <ClothingItem itemId={avatarState.makeup} position={[0, 0, 0]} />
+          )}
         </group>
 
         {/* Body (torso) */}
         <group position={[0, 0.6, 0]}>
-          {/* Base body */}
           <mesh>
             <capsuleGeometry args={[0.25, 0.35, 8, 12]} />
             <meshToonMaterial color={avatarState.skinColor} />
           </mesh>
-
-          {/* Top clothing */}
           {avatarState.top && (
             <ClothingItem itemId={avatarState.top} position={[0, 0.05, 0]} />
           )}

@@ -8,13 +8,14 @@ interface CategoryTabsProps {
   onChange: (cat: ClothingCategory) => void
 }
 
-const CATEGORIES: ClothingCategory[] = ['hair', 'top', 'bottom', 'shoes', 'accessory']
+const CATEGORIES: ClothingCategory[] = ['hair', 'top', 'bottom', 'shoes', 'accessory', 'makeup']
 const LABELS: Record<ClothingCategory, string> = {
   hair: 'Hair',
   top: 'Tops',
   bottom: 'Bottoms',
   shoes: 'Shoes',
   accessory: 'Acc.',
+  makeup: 'Makeup',
 }
 
 export default function CategoryTabs({ active, onChange }: CategoryTabsProps) {
@@ -26,8 +27,8 @@ export default function CategoryTabs({ active, onChange }: CategoryTabsProps) {
           onClick={() => onChange(cat)}
           className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
             active === cat
-              ? 'bg-pink-500 text-white shadow-md scale-105'
-              : 'bg-white/20 text-pink-200 hover:bg-white/30'
+              ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-md scale-105 border border-white/20'
+              : 'bg-white/15 text-pink-200 hover:bg-white/25 border border-transparent'
           }`}
         >
           <span>{CATEGORY_EMOJI[cat]}</span>

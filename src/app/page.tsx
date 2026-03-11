@@ -9,6 +9,7 @@ import RoundManager from '@/modules/rounds/RoundManager'
 import RunwayWalk from '@/modules/rounds/RunwayWalk'
 import ThemeAnnouncer from '@/modules/rounds/ThemeAnnouncer'
 import ResultsPanel from '@/modules/rounds/ResultsPanel'
+import VotingPanel from '@/modules/rounds/VotingPanel'
 import HUD from '@/modules/ui/HUD'
 import WardrobePanel from '@/modules/wardrobe/WardrobePanel'
 import MobileControls from '@/modules/movement/MobileControls'
@@ -50,6 +51,7 @@ function GameUI() {
       <HUD />
       <ThemeAnnouncer />
       <WardrobePanel />
+      <VotingPanel />
       <ResultsPanel />
 
       {/* Mobile Controls */}
